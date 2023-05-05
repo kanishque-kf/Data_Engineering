@@ -8,6 +8,9 @@ from dataclasses import dataclass
 
 from src.exceptions import CustomException
 from src.logger import logging
+
+from src.components.data_transformation import DataTransformation
+
 import src.config as con
 
 
@@ -66,7 +69,8 @@ class DataLoading:
             song_df.to_csv(self.loading_config.song_data_path, index = False,header=True)
             log_df = self.read_s3_to_dataframe(bucket_name,log_prefix)
             log_df.to_csv(self.loading_config.log_data_path, index = False,header=True)
-            logging.info("Log data and Song data converted to DF")
+            
+            logging.info("Log data and Song data saved to artifacts")
             
             return(
                 self.loading_config.log_data_path,
@@ -79,3 +83,8 @@ class DataLoading:
 if __name__=="__main__":
     obj = DataLoading()
     log_data,song_data = obj.initiate_data_loader()
+    print(log_data,song_data)
+ 
+    transformer = DataTransformation()
+    transformer.initiate_transformation(log_data,song_data)
+    
