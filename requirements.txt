@@ -4,5 +4,5 @@ seaborn
 matplotlib
 scikit-learn
 pyspark == 3.1.1
-py4j==0.10.9
+py4j
 -e .
